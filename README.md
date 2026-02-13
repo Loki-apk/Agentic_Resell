@@ -1,4 +1,4 @@
-# Resell App — Agentic AI Price Prediction
+# Agentic Resell — AI Price Prediction
 
 A multi-agent AI system that analyzes product images and finds comparable listings on Kleinanzeigen (a German marketplace) to suggest a reasonable resale price based on market data.
 
@@ -85,7 +85,7 @@ This application requires **product image URLs** as input.
 ### Setup
 
 ```powershell
-cd "Resell App"
+cd "Agentic Resell"
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
