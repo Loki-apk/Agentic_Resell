@@ -1,0 +1,146 @@
+image_analysis_task:
+  description: >
+    Analyze the product images using the Qwen Vision Tool to extract structured product information.
+    
+    STEP 1 - TOOL INVOCATION (ONE TIME ONLY):
+    Call the Qwen Vision Tool EXACTLY ONCE with the image_urls from the context: {image_urls}
+    Pass the image URLs as a list to the tool.
+    
+    STEP 2 - VALIDATE RESPONSE:
+    - If the tool returns an error (e.g., "inconsistent images"), format that error as JSON and STOP
+    - If the tool returns valid JSON with product details, proceed to Step 3
+    
+    STEP 3 - FORMAT & RETURN:
+    Extract and structure the tool's response into the expected output format.
+    Return ONLY valid JSON - no explanations, no markdown, no additional text.
+    
+    **CRITICAL**: Call the tool only ONCE. Do not retry or loop. If it fails, return the error as-is.
+    
+  expected_output: >
+    A valid JSON object with the following structure:
+    {
+      "item_name": "string",
+      "brand": "string",
+      "model": "string",
+      "color": "string",
+      "condition": "string",
+      "key_features": "string",
+      "description": "string"
+    }
+    
+    If analysis fails, return:
+    {
+      "error": "string"
+    }
+    
+generate_query_task:
+  description: >
+    Generate an optimized German search query for Kleinanzeigen based on the image analysis results and iteration feedback.
+    
+    CONTEXT:
+    - Current Iteration: {iteration}
+    - Image Analysis: {image_analysis}
+    - Previous Feedback: {feedback}
+    
+    CRITICAL RULES:
+    1. You MUST base your query ONLY on the image analysis provided above
+    2. DO NOT hallucinate or add information not present in the image analysis
+    3. The query MUST be in German (Kleinanzeigen is a German platform)
+    4. Return ONLY valid JSON - no markdown, no explanations, no additional text
+    
+    GERMAN MARKET CONVENTIONS (CRITICAL):
+    - Do NOT use technical model numbers (e.g., A2886) - German sellers list by marketing names (e.g., iPhone 14 Plus)
+    - Translate color names to German (e.g., Midnight → Mitternacht, Silver → Silber, Blue → Blau)
+    - Use German condition terms: New → neu, Like New → wie neu, Good → gut, Fair → befriedigend
+    - Brand names stay in English if that's how sellers list them (e.g., Apple, iPhone, Canon)
+    - Balance specificity with breadth: include color/condition only if likely to find matches
+    
+    QUERY STRATEGY BY ITERATION:
+    
+    Iteration 1 (Initial Query):
+    - Start with Brand + Marketing Model Name (use item_name or model, not technical ID)
+    - Keep it concise: 2-4 words maximum
+    - Example: For iPhone 14 Plus (A2886) → "iPhone 14 Plus" (NOT "A2886")
+    - Example: For Canon 5D Mark IV → "Canon 5D Mark IV" (NOT "EOS 5D Mark IV")
+    - Example: For Jobo Multitank 1540 → "Jobo Multitank 1540"
+    
+    Iteration 2+ (Refinement based on feedback):
+    - If feedback says "too broad" or "too many unrelated items":
+      * Add color detail from image analysis (translated to German): "iPhone 14 Plus Mitternacht" (Midnight→Mitternacht)
+      * Add condition if relevant: "iPhone 14 Plus neu" (New→neu)
+      * Maximum 4 words after adding details
+    
+    - If feedback says "too narrow" or "no results":
+      * Remove specific details: drop color or condition, keep brand+model
+      * Example: "iPhone 14 Plus" instead of "iPhone 14 Plus neu Mitternacht"
+      * Try broader term if available from image analysis
+    
+    - If feedback says "wrong focus" or "wrong product type":
+      * Pivot to different attributes from image analysis
+      * Use key_features if product type might be wrong
+      * Try alternative German product categories
+    
+    COLOR TRANSLATION GUIDE:
+    Common English → German: Midnight→Mitternacht, Silver→Silber, Gold→Gold, Black→Schwarz, 
+    White→Weiß, Blue→Blau, Red→Rot, Green→Grün, Rose Gold→Roségold, Space Gray→Weltraumgrau
+    
+    VALIDATION:
+    - Ensure no technical model numbers are included (A2886, EF-S, etc.)
+    - Verify colors are in German if included
+    - Confirm the query uses marketing names sellers would recognize
+    - Double-check query is natural German that sellers would use
+    - Verify you're outputting ONLY valid JSON
+   
+  expected_output: >
+    A valid JSON object with this exact structure:
+    {
+      "search_query": "string"
+    }
+
+evaluate_list_task:
+  description: >
+    You are a strict Quality Assurance Auditor for second-hand market listings.
+    
+    1. INPUT ANALYSIS:
+       - Target Product: Read the "{image_analysis}" carefully. Note the Brand, Model, Material, and Color.
+       - Listings: Review the JSON list in "Scraped Data".
+
+    2. EVALUATION LOOP (Mental Scratchpad):
+       For every single listing, perform this binary check:
+       - MATCH (true): The listing is DEFINITELY the same product (same model/design). It can be used/second-hand, but must be the specific item we want.
+       - NO MATCH (false): It is a different model, a "lookalike", a spare part, a box only, or a rental ad.
+       
+       *CRITICAL*: If the title says "Suche" (Searching for) or "Defekt" (Broken), mark it as is_match: false.
+
+    3. EXECUTION STEP:
+       - Read the scraped listings using "Read Local Database".
+       - IMPORTANT: pass the file path from context as {scraped_data_file}.
+         Example tool input: {"request":"read","file_path":"C:\\path\\to\\kleinanzeigen_items.json"}
+       - Construct a list of evaluation objects. Each object must contain:
+         { "id": "...", "price": "...", "is_match": boolean, "reasoning": "short reason" }
+         - **DO NOT** calculate percentages or counts yourself.
+         - **YOU MUST CALL** the tool "Evaluation Metrics Calculator" with this list.
+       
+    4. FINAL OUTPUT:
+       - Your final answer must be the **exact JSON output provided by the tool**.
+       - Do not add extra text, markdown, or explanations outside the JSON.
+
+  expected_output: >
+    Return ONLY a valid JSON object. Do not include markdown formatting (like ```json) or additional text.
+    The JSON must match this exact structure:
+    {
+      "individual_results_evaluation": [
+        {
+          "id": "Listing ID",
+          "price": "Price string (e.g., '150 €' or 'VB')",
+          "is_match": true,
+          "reasoning": "Brief explanation of why it matches or fails"
+        }
+      ],
+      "count_positive": 0,
+      "count_negative": 0,
+      "match_percentage": 0.0,
+      "total_listings": 0,
+      "overall_sufficiency": "sufficient",
+      "query_improvement_feedback": "Actionable feedback if insufficient (max 200 chars)"
+    }

@@ -1,0 +1,17 @@
+{
+  "iteration": 1,
+  "query": "Fritz!Box 6850 5G",
+  "evaluation": {
+    "individual_results_evaluation": []
+  },
+  "count_positive": 0,
+  "count_negative": 0,
+  "total_listings": 0,
+  "match_percentage": 0,
+  "price_statistics": {
+    "count_prices_parsed": 0,
+    "count_listings": 0,
+    "price_statistics_all": null,
+    "price_statistics_matches": null
+  }
+}

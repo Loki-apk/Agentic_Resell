@@ -1,0 +1,94 @@
+{
+  "iteration": 1,
+  "query": "Fritzbox 6850 5G",
+  "evaluation": {
+    "individual_results_evaluation": [
+      {
+        "id": "4564",
+        "price": "399 € VB",
+        "is_match": true,
+        "reasoning": "Correct model (6850 5G), brand AVM implied, condition new acceptable per criteria"
+      },
+      {
+        "id": "8222",
+        "price": "375 €",
+        "is_match": true,
+        "reasoning": "Correct model, used condition, key features match (DECT interface, LAN ports, 5G)"
+      },
+      {
+        "id": "4771",
+        "price": "410 € VB",
+        "is_match": true,
+        "reasoning": "Correct model, neuwertig acceptable, features match (5G, LAN, DECT)"
+      },
+      {
+        "id": "2675",
+        "price": "440 €",
+        "is_match": true,
+        "reasoning": "Correct model and brand (AVM), unopened but same product"
+      },
+      {
+        "id": "17292",
+        "price": "VB",
+        "is_match": false,
+        "reasoning": "Title contains 'SUCHE' (search ad)"
+      },
+      {
+        "id": "310",
+        "price": "50 € VB",
+        "is_match": false,
+        "reasoning": "Title contains 'SUCHE' and 'defekt' (broken)"
+      },
+      {
+        "id": "17292",
+        "price": "VB",
+        "is_match": false,
+        "reasoning": "Title contains 'SUCHE' (search ad)"
+      },
+      {
+        "id": "1468",
+        "price": "VB",
+        "is_match": false,
+        "reasoning": "Title contains 'SUCHE' and includes alternative model 6860"
+      },
+      {
+        "id": "2077",
+        "price": "440 € VB",
+        "is_match": true,
+        "reasoning": "Correct model, new but acceptable per criteria"
+      },
+      {
+        "id": "1806",
+        "price": "365 €",
+        "is_match": true,
+        "reasoning": "Correct model, features match (5G, LAN ports)"
+      }
+    ],
+    "count_positive": 6,
+    "count_negative": 4,
+    "match_percentage": 60.0,
+    "total_listings": 10,
+    "overall_sufficiency": "sufficient",
+    "query_improvement_feedback": ""
+  },
+  "count_positive": 6,
+  "count_negative": 4,
+  "total_listings": 10,
+  "match_percentage": 60.0,
+  "price_statistics": {
+    "count_prices_parsed": 6,
+    "count_listings": 6,
+    "price_statistics_all": {
+      "min": 365.0,
+      "max": 440.0,
+      "mean": 404.83,
+      "median": 404.5
+    },
+    "price_statistics_matches": {
+      "min": 365.0,
+      "max": 440.0,
+      "mean": 404.83,
+      "median": 404.5
+    }
+  }
+}

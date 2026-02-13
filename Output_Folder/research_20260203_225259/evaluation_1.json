@@ -1,0 +1,92 @@
+{
+  "iteration": 1,
+  "query": "Fritz!Box 6850 5G",
+  "evaluation": {
+    "individual_results_evaluation": [
+      {
+        "id": "2077",
+        "price": "440 € VB",
+        "is_match": true,
+        "reasoning": "Exact model 6850 5G, AVM brand, matches all key features"
+      },
+      {
+        "id": "4771",
+        "price": "410 € VB",
+        "is_match": true,
+        "reasoning": "Model 6850 5G confirmed, features align with target"
+      },
+      {
+        "id": "8222",
+        "price": "375 €",
+        "is_match": true,
+        "reasoning": "Correct model with usage history, includes DECT interface"
+      },
+      {
+        "id": "5435",
+        "price": "380 € VB",
+        "is_match": true,
+        "reasoning": "6850 5G model specified with full feature set"
+      },
+      {
+        "id": "4564",
+        "price": "399 € VB",
+        "is_match": true,
+        "reasoning": "New but correct model 6850 5G, AVM brand"
+      },
+      {
+        "id": "1290",
+        "price": "109 € VB",
+        "is_match": false,
+        "reasoning": "Model specifies LTE and explicitly states 'kein 5G' (no 5G)"
+      },
+      {
+        "id": "2675",
+        "price": "440 €",
+        "is_match": true,
+        "reasoning": "AVM-branded 6850 5G in original packaging"
+      },
+      {
+        "id": "1806",
+        "price": "365 €",
+        "is_match": true,
+        "reasoning": "Title and description confirm 6850 5G model"
+      },
+      {
+        "id": "1091",
+        "price": "350 € VB",
+        "is_match": true,
+        "reasoning": "Description specifies 6850 5G despite LTE mention in title"
+      },
+      {
+        "id": "1468",
+        "price": "VB",
+        "is_match": false,
+        "reasoning": "Title contains 'SUCHE' indicating search request, not a sale listing"
+      }
+    ],
+    "count_positive": 8,
+    "count_negative": 2,
+    "match_percentage": 80.0,
+    "total_listings": 10,
+    "overall_sufficiency": "sufficient",
+    "query_improvement_feedback": ""
+  },
+  "count_positive": 8,
+  "count_negative": 2,
+  "total_listings": 10,
+  "match_percentage": 80.0,
+  "price_statistics": {
+    "count_prices_parsed": 8,
+    "count_listings": 8,
+    "price_statistics_all": {
+      "min": 350.0,
+      "max": 440.0,
+      "median": 389.5
+    },
+    "price_statistics_matches": {
+      "min": 350.0,
+      "max": 440.0,
+      "median": 389.5
+    }
+  }
+}

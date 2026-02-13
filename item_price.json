@@ -1,0 +1,10 @@
+{
+  "item_name": "Fritz!Box Router",
+  "condition": "Used",
+  "description": "The Fritz!Box 6850 5G is a dual-band Wi-Fi router with multiple LAN ports and an integrated DECT interface for phone connectivity. It supports 5G connectivity and comes with a power adapter and cable.",
+  "range": [
+    350.0,
+    440.0
+  ],
+  "median": 389.5
+}
