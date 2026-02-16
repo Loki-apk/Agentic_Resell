@@ -107,6 +107,7 @@ Image_MODEL=your-vision-model
 
 ```powershell
 python -m resell_app.main
+crewai run #to run the crew directly
 ```
 
 ---
